@@ -1,0 +1,21 @@
+{
+  "app": "python app.py",
+  "watch": {
+    "include": ["**"],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "**/__pycache__",
+      "**/*.pyc",
+      ".venv"
+    ]
+  },
+  "context": {
+    "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
+    "@aws-cdk/core:stackRelativeExports": true,
+    "connect_instance_arn": "",
+    "numverify_api_key_secret_name": "caller-agent/numverify-api-key",
+    "notification_email": "",
+    "aws_region": "us-east-1"
+  }
+}

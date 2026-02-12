@@ -1,0 +1,249 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Caller Agent Actions API",
+    "version": "1.0.0",
+    "description": "API for managing incoming phone calls. Provides tools to check phone numbers for spam, look up caller information, save call records, and send notifications."
+  },
+  "paths": {
+    "/check-spam/{phoneNumber}": {
+      "get": {
+        "summary": "Check if a phone number is spam",
+        "description": "Validates a phone number using an external lookup service and determines if it is likely spam based on the line type and validity. Call this tool as soon as you have the caller's phone number, before collecting additional information. If the number is identified as spam, politely end the call.",
+        "operationId": "checkSpam",
+        "parameters": [
+          {
+            "name": "phoneNumber",
+            "in": "path",
+            "description": "The caller's phone number in E.164 international format (e.g., +14155552671). Include the country code with a plus sign prefix.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spam check result with phone number details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_spam": {
+                      "type": "boolean",
+                      "description": "True if the phone number is identified as likely spam"
+                    },
+                    "is_valid": {
+                      "type": "boolean",
+                      "description": "True if the phone number is a valid format"
+                    },
+                    "line_type": {
+                      "type": "string",
+                      "description": "The type of phone line: mobile, landline, voip, toll_free, or unknown"
+                    },
+                    "carrier": {
+                      "type": "string",
+                      "description": "The phone carrier or provider name"
+                    },
+                    "country": {
+                      "type": "string",
+                      "description": "The country associated with the phone number"
+                    },
+                    "spam_reason": {
+                      "type": "string",
+                      "description": "If spam, the reason it was flagged (e.g., 'invalid number', 'voip_unverified')"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/caller-info/{phoneNumber}": {
+      "get": {
+        "summary": "Look up phone number information",
+        "description": "Retrieves carrier, location, and line type information for a phone number using an external lookup service. Use this to gather additional context about a caller's phone number.",
+        "operationId": "getCallerInfo",
+        "parameters": [
+          {
+            "name": "phoneNumber",
+            "in": "path",
+            "description": "The caller's phone number in E.164 international format (e.g., +14155552671).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Phone number information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean",
+                      "description": "Whether the phone number is valid"
+                    },
+                    "country_name": {
+                      "type": "string",
+                      "description": "Country associated with the number"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Geographic location of the number"
+                    },
+                    "carrier": {
+                      "type": "string",
+                      "description": "Phone carrier name"
+                    },
+                    "line_type": {
+                      "type": "string",
+                      "description": "Type of phone line"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/call-record": {
+      "post": {
+        "summary": "Save a call record to the database",
+        "description": "Saves the caller's information and call details to the database. Call this tool after you have collected the caller's name, phone number, and reason for calling, and after confirming the call is not spam. The call_id should be a unique identifier for this call session.",
+        "operationId": "saveCallRecord",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "call_id": {
+                    "type": "string",
+                    "description": "Unique identifier for this call session. Use the session ID or generate a UUID."
+                  },
+                  "caller_name": {
+                    "type": "string",
+                    "description": "The caller's full name as provided by them."
+                  },
+                  "caller_phone": {
+                    "type": "string",
+                    "description": "The caller's phone number in E.164 format."
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "The caller's stated reason for calling or their message."
+                  },
+                  "is_spam": {
+                    "type": "boolean",
+                    "description": "Whether the call was identified as spam."
+                  }
+                },
+                "required": [
+                  "call_id",
+                  "caller_name",
+                  "caller_phone",
+                  "reason",
+                  "is_spam"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Call record saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the record was saved successfully"
+                    },
+                    "call_id": {
+                      "type": "string",
+                      "description": "The call ID of the saved record"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notification": {
+      "post": {
+        "summary": "Send a notification about a call",
+        "description": "Sends an SNS notification to the phone owner with the caller's details and message. Call this tool after successfully saving the call record, only for legitimate (non-spam) calls.",
+        "operationId": "sendNotification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "caller_name": {
+                    "type": "string",
+                    "description": "The caller's name."
+                  },
+                  "caller_phone": {
+                    "type": "string",
+                    "description": "The caller's phone number."
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "The reason for the call or the caller's message."
+                  },
+                  "call_id": {
+                    "type": "string",
+                    "description": "The unique call identifier for reference."
+                  }
+                },
+                "required": [
+                  "caller_name",
+                  "caller_phone",
+                  "reason",
+                  "call_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Notification sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the notification was sent successfully"
+                    },
+                    "message_id": {
+                      "type": "string",
+                      "description": "The SNS message ID for tracking"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "action-set-voice",
+  "Metadata": {
+    "EntryPointPosition": { "x": 20, "y": 100 },
+    "ActionMetadata": {
+      "action-set-voice": { "Position": { "x": 200, "y": 100 } },
+      "action-lex-bot": { "Position": { "x": 400, "y": 100 } },
+      "action-post-lex": { "Position": { "x": 600, "y": 100 } },
+      "action-error-message": { "Position": { "x": 600, "y": 300 } },
+      "action-disconnect": { "Position": { "x": 800, "y": 200 } }
+    }
+  },
+  "Actions": [
+    {
+      "Identifier": "action-set-voice",
+      "Type": "UpdateContactTextToSpeechVoice",
+      "Parameters": {
+        "TextToSpeechVoice": "Joanna",
+        "TextToSpeechEngine": "Neural"
+      },
+      "Transitions": {
+        "NextAction": "action-lex-bot",
+        "Errors": [
+          {
+            "NextAction": "action-lex-bot",
+            "ErrorType": "NoMatchingError"
+          }
+        ],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "action-lex-bot",
+      "Type": "ConnectParticipantWithLexBot",
+      "Parameters": {
+        "Text": "Hello, thank you for calling.",
+        "LexV2Bot": {
+          "AliasArn": "${LEX_BOT_ALIAS_ARN}"
+        },
+        "LexSessionAttributes": {},
+        "LexTimeoutSeconds": {
+          "Text": "300"
+        }
+      },
+      "Transitions": {
+        "NextAction": "action-post-lex",
+        "Errors": [
+          {
+            "NextAction": "action-error-message",
+            "ErrorType": "InputTimeLimitExceeded"
+          },
+          {
+            "NextAction": "action-error-message",
+            "ErrorType": "NoMatchingError"
+          },
+          {
+            "NextAction": "action-error-message",
+            "ErrorType": "NoMatchingCondition"
+          }
+        ],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "action-post-lex",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Thank you for calling. Goodbye."
+      },
+      "Transitions": {
+        "NextAction": "action-disconnect",
+        "Errors": [
+          {
+            "NextAction": "action-disconnect",
+            "ErrorType": "NoMatchingError"
+          }
+        ],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "action-error-message",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "We're sorry, we were unable to process your call at this time. Please try again later. Goodbye."
+      },
+      "Transitions": {
+        "NextAction": "action-disconnect",
+        "Errors": [
+          {
+            "NextAction": "action-disconnect",
+            "ErrorType": "NoMatchingError"
+          }
+        ],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "action-disconnect",
+      "Type": "DisconnectParticipant",
+      "Parameters": {},
+      "Transitions": {}
+    }
+  ]
+}
