@@ -1,9 +1,9 @@
 """
 Bedrock Agent Action Group Lambda Handler.
 
-Handles four API operations:
-- GET /check-spam/{phoneNumber} — Check if a phone number is spam
-- GET /caller-info/{phoneNumber} — Look up phone number information
+Handles API operations:
+- GET /check-spam/{phoneNumber} — Check if a phone number is spam (optional)
+- GET /caller-info/{phoneNumber} — Look up phone number information (optional)
 - POST /call-record — Save call record to DynamoDB
 - POST /notification — Send SNS notification
 """
@@ -14,18 +14,23 @@ import uuid
 from datetime import datetime, timezone
 
 import boto3
-import requests
 
 # Environment variables
 TABLE_NAME = os.environ["CALL_RECORDS_TABLE"]
 TOPIC_ARN = os.environ["NOTIFICATION_TOPIC_ARN"]
-SECRET_NAME = os.environ["NUMVERIFY_SECRET_NAME"]
+SPAM_DETECTION_ENABLED = os.environ.get("SPAM_DETECTION_ENABLED", "false").lower() == "true"
 
 # AWS clients
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(TABLE_NAME)
 sns_client = boto3.client("sns")
-secrets_client = boto3.client("secretsmanager")
+
+# Conditionally import requests and set up secrets client
+if SPAM_DETECTION_ENABLED:
+    import requests
+
+    SECRET_NAME = os.environ["NUMVERIFY_SECRET_NAME"]
+    secrets_client = boto3.client("secretsmanager")
 
 # Cache the API key across invocations
 _numverify_api_key = None
@@ -43,6 +48,16 @@ def get_numverify_api_key():
 
 def check_spam(phone_number: str) -> dict:
     """Check if a phone number is spam using NumVerify API."""
+    if not SPAM_DETECTION_ENABLED:
+        return {
+            "is_spam": False,
+            "is_valid": True,
+            "line_type": "unknown",
+            "carrier": "unknown",
+            "country": "unknown",
+            "spam_reason": "spam_detection_disabled",
+        }
+
     api_key = get_numverify_api_key()
     url = "http://apilayer.net/api/validate"
     params = {
@@ -60,9 +75,6 @@ def check_spam(phone_number: str) -> dict:
         is_valid = data.get("valid", False)
         line_type = data.get("line_type", "unknown")
 
-        # Spam heuristics:
-        # 1. Invalid numbers are suspicious
-        # 2. VoIP numbers are higher risk (commonly used for spam)
         is_spam = False
         spam_reason = ""
 
@@ -83,7 +95,6 @@ def check_spam(phone_number: str) -> dict:
         }
 
     except requests.RequestException as e:
-        # On API failure, default to not-spam to avoid blocking legitimate calls
         return {
             "is_spam": False,
             "is_valid": True,
@@ -96,6 +107,15 @@ def check_spam(phone_number: str) -> dict:
 
 def get_caller_info(phone_number: str) -> dict:
     """Look up phone number information using NumVerify API."""
+    if not SPAM_DETECTION_ENABLED:
+        return {
+            "valid": True,
+            "country_name": "unknown",
+            "location": "unknown",
+            "carrier": "unknown",
+            "line_type": "unknown",
+        }
+
     api_key = get_numverify_api_key()
     url = "http://apilayer.net/api/validate"
     params = {
@@ -173,7 +193,7 @@ def send_notification(body: dict) -> dict:
 
     response = sns_client.publish(
         TopicArn=TOPIC_ARN,
-        Subject=subject[:100],  # SNS subject max 100 chars
+        Subject=subject[:100],
         Message=message,
     )
 
@@ -215,7 +235,6 @@ def extract_request_body(event: dict) -> dict:
     for prop in properties:
         name = prop["name"]
         value = prop["value"]
-        # Convert string booleans
         if value in ("true", "True"):
             value = True
         elif value in ("false", "False"):

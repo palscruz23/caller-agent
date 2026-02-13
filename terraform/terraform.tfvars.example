@@ -2,7 +2,16 @@
 #
 # cp terraform.tfvars.example terraform.tfvars
 
-aws_region            = "us-east-1"
-connect_instance_arn  = "arn:aws:connect:us-east-1:123456789012:instance/your-instance-id"
-notification_email    = "your-email@example.com"
-numverify_secret_name = "caller-agent/numverify-api-key"
+aws_region             = "ap-southeast-2"
+notification_email     = "your-email@example.com"
+
+# Connect instance alias (must be globally unique, lowercase, no spaces)
+connect_instance_alias = "caller-agent"
+
+# Phone number settings
+connect_phone_country  = "AU"
+connect_phone_type     = "DID"
+
+# Spam detection (optional — set to true and configure NumVerify to enable)
+enable_spam_detection  = false
+# numverify_secret_name = "caller-agent/numverify-api-key"

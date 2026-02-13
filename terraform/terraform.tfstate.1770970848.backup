@@ -1,0 +1,1355 @@
+{
+  "version": 4,
+  "terraform_version": "1.14.5",
+  "serial": 52,
+  "lineage": "6312e533-6c2f-ff46-6a07-cd644ce0a7ef",
+  "outputs": {
+    "bedrock_agent_alias_id": {
+      "value": "SP6VGXLTGP",
+      "type": "string"
+    },
+    "bedrock_agent_id": {
+      "value": "XFP79LEMQS",
+      "type": "string"
+    },
+    "connect_instance_arn": {
+      "value": "arn:aws:connect:ap-southeast-2:448049809502:instance/7029378a-e2a7-406b-bf12-c07b947cc499",
+      "type": "string"
+    },
+    "connect_instance_id": {
+      "value": "7029378a-e2a7-406b-bf12-c07b947cc499",
+      "type": "string"
+    },
+    "contact_flow_arn": {
+      "value": "arn:aws:connect:ap-southeast-2:448049809502:instance/7029378a-e2a7-406b-bf12-c07b947cc499/contact-flow/a6089d26-92c5-49a9-8e32-f83020fd9587",
+      "type": "string"
+    },
+    "dynamodb_table_name": {
+      "value": "caller-agent-call-records",
+      "type": "string"
+    },
+    "lambda_function_arn": {
+      "value": "arn:aws:lambda:ap-southeast-2:448049809502:function:caller-agent-action-handler",
+      "type": "string"
+    },
+    "lex_bot_alias_id": {
+      "value": "MWVNJOTEE7",
+      "type": "string"
+    },
+    "lex_bot_id": {
+      "value": "KHFFZES20W",
+      "type": "string"
+    },
+    "phone_number": {
+      "value": "+61283487410",
+      "type": "string"
+    },
+    "sns_topic_arn": {
+      "value": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "data",
+      "type": "archive_file",
+      "name": "lambda_zip",
+      "provider": "provider[\"registry.terraform.io/hashicorp/archive\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "exclude_symlink_directories": null,
+            "excludes": null,
+            "id": "c0de018d3261b503778e4e6fcf4330199b126bba",
+            "output_base64sha256": "4cyrm/BG92sY6uTPM+k6dDJ1zE1apMfS/alnOAolPV0=",
+            "output_base64sha512": "0C/R0tV79N9dxHsibZZO6HrdaGPCIFXYYHuxsaHUmhVPD9k9mehh6oH87P9sqcpWUulR6wu9NK+JODvs1WZ73A==",
+            "output_file_mode": null,
+            "output_md5": "803275452137f02cace461af00f0baa7",
+            "output_path": "C:/Users/61422/Desktop/OMSCS/projects/LLM/caller-agent/terraform/build/lambda_payload.zip",
+            "output_sha": "c0de018d3261b503778e4e6fcf4330199b126bba",
+            "output_sha256": "e1ccab9bf046f76b18eae4cf33e93a743275cc4d5aa4c7d2fda967380a253d5d",
+            "output_sha512": "d02fd1d2d57bf4df5dc47b226d964ee87add6863c22055d8607bb1b1a1d49a154f0fd93d99e861ea81fcecff6ca9ca5652e951eb0bbd34af89383becd5667bdc",
+            "output_size": 1078250,
+            "source": [],
+            "source_content": null,
+            "source_content_filename": null,
+            "source_dir": "C:/Users/61422/Desktop/OMSCS/projects/LLM/caller-agent/terraform/build/lambda",
+            "source_file": null,
+            "type": "zip"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "data",
+      "type": "aws_caller_identity",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "account_id": "448049809502",
+            "arn": "arn:aws:iam::448049809502:user/caller-agent-user",
+            "id": "448049809502",
+            "user_id": "AIDAWQUOZRBPETCMJRRIX"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "data",
+      "type": "aws_region",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "description": "Asia Pacific (Sydney)",
+            "endpoint": "ec2.ap-southeast-2.amazonaws.com",
+            "id": "ap-southeast-2",
+            "name": "ap-southeast-2",
+            "region": "ap-southeast-2"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "data",
+      "type": "aws_secretsmanager_secret",
+      "name": "numverify",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": []
+    },
+    {
+      "mode": "managed",
+      "type": "aws_bedrockagent_agent",
+      "name": "caller_agent",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "agent_arn": "arn:aws:bedrock:ap-southeast-2:448049809502:agent/XFP79LEMQS",
+            "agent_collaboration": "DISABLED",
+            "agent_id": "XFP79LEMQS",
+            "agent_name": "caller-answering-agent",
+            "agent_resource_role_arn": "arn:aws:iam::448049809502:role/caller-agent-bedrock-role-ap-southeast-2",
+            "agent_version": null,
+            "customer_encryption_key_arn": null,
+            "description": "Automated caller answering agent that greets callers, collects information, checks for spam, and notifies the owner.",
+            "foundation_model": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+            "guardrail_configuration": null,
+            "id": "XFP79LEMQS",
+            "idle_session_ttl_in_seconds": 600,
+            "instruction": "You are a professional and courteous phone answering assistant. Your role is to answer incoming phone calls on behalf of the phone owner who is currently unavailable.\n\n## Your Behavior\n\n1. GREETING: Begin every call with a warm, professional greeting. Say something like: \"Hello, thank you for calling. The person you are trying to reach is currently unavailable. I am their virtual assistant and I can take a message for you. How may I help you?\"\n\n2. INFORMATION COLLECTION: You need to collect three pieces of information from the caller:\n   - Their full name\n   - Their phone number (ask them to confirm the number they are calling from, or provide an alternative callback number)\n   - The reason for their call or the message they would like to leave\n\n3. SPAM DETECTION (OPTIONAL): If the checkSpam tool is available, use it to verify the caller's phone number as soon as you have it. Do this silently without telling the caller you are checking.\n   - If the number is flagged as SPAM: Politely say \"Thank you for calling, but we are unable to take your message at this time. Goodbye.\" and end the conversation.\n   - If the number is legitimate or if spam detection returns \"spam_detection_disabled\": Continue collecting information normally.\n   - If the checkSpam tool is not available or returns an error, continue collecting information — do not block the caller.\n\n4. SAVING AND NOTIFYING: Once you have collected all three pieces of information from a legitimate caller:\n   - Use the saveCallRecord tool to save the caller's information\n   - Use the sendNotification tool to alert the phone owner\n   - Confirm to the caller that their message has been recorded and the person will be notified\n\n5. CONVERSATION STYLE:\n   - Be polite, patient, and professional at all times\n   - Speak in a natural, conversational tone\n   - If the caller is unclear, ask clarifying questions\n   - Keep the conversation focused and efficient\n   - Do not reveal that you are an AI unless directly asked\n   - If asked, say \"I am a virtual assistant\"\n\n6. ENDING THE CALL: After saving the information and sending the notification, thank the caller and say goodbye: \"Thank you, [caller name]. Your message has been recorded and they will be notified shortly. Have a great day. Goodbye.\"\n\n7. EDGE CASES:\n   - If the caller refuses to provide their name, use \"Anonymous Caller\"\n   - If the caller refuses to provide a phone number, note it as \"withheld\" and skip the spam check\n   - If the caller becomes abusive or not responding to your questions, politely end the call\n   - If there is a technical error with any tool, apologize and ask the caller to try again later\n",
+            "memory_configuration": null,
+            "prepare_agent": true,
+            "prepared_at": "2026-02-13T07:42:49Z",
+            "prompt_override_configuration": [
+              {
+                "override_lambda": null,
+                "prompt_configurations": null
+              }
+            ],
+            "region": "ap-southeast-2",
+            "skip_resource_in_use_check": false,
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "dependencies": [
+            "aws_iam_role.bedrock_agent"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_bedrockagent_agent_action_group",
+      "name": "caller_management",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "action_group_executor": [
+              {
+                "custom_control": null,
+                "lambda": "arn:aws:lambda:ap-southeast-2:448049809502:function:caller-agent-action-handler"
+              }
+            ],
+            "action_group_id": "ZTMU4DCB1M",
+            "action_group_name": "CallerManagementActions",
+            "action_group_state": "ENABLED",
+            "agent_id": "XFP79LEMQS",
+            "agent_version": "DRAFT",
+            "api_schema": [
+              {
+                "payload": "{\n  \"openapi\": \"3.0.0\",\n  \"info\": {\n    \"title\": \"Caller Agent Actions API\",\n    \"version\": \"1.0.0\",\n    \"description\": \"API for managing incoming phone calls. Provides tools to check phone numbers for spam, look up caller information, save call records, and send notifications.\"\n  },\n  \"paths\": {\n    \"/check-spam/{phoneNumber}\": {\n      \"get\": {\n        \"summary\": \"Check if a phone number is spam\",\n        \"description\": \"Validates a phone number using an external lookup service and determines if it is likely spam based on the line type and validity. Call this tool as soon as you have the caller's phone number, before collecting additional information. If the number is identified as spam, politely end the call.\",\n        \"operationId\": \"checkSpam\",\n        \"parameters\": [\n          {\n            \"name\": \"phoneNumber\",\n            \"in\": \"path\",\n            \"description\": \"The caller's phone number in E.164 international format (e.g., +14155552671). Include the country code with a plus sign prefix.\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Spam check result with phone number details\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"is_spam\": {\n                      \"type\": \"boolean\",\n                      \"description\": \"True if the phone number is identified as likely spam\"\n                    },\n                    \"is_valid\": {\n                      \"type\": \"boolean\",\n                      \"description\": \"True if the phone number is a valid format\"\n                    },\n                    \"line_type\": {\n                      \"type\": \"string\",\n                      \"description\": \"The type of phone line: mobile, landline, voip, toll_free, or unknown\"\n                    },\n                    \"carrier\": {\n                      \"type\": \"string\",\n                      \"description\": \"The phone carrier or provider name\"\n                    },\n                    \"country\": {\n                      \"type\": \"string\",\n                      \"description\": \"The country associated with the phone number\"\n                    },\n                    \"spam_reason\": {\n                      \"type\": \"string\",\n                      \"description\": \"If spam, the reason it was flagged (e.g., 'invalid number', 'voip_unverified')\"\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/caller-info/{phoneNumber}\": {\n      \"get\": {\n        \"summary\": \"Look up phone number information\",\n        \"description\": \"Retrieves carrier, location, and line type information for a phone number using an external lookup service. Use this to gather additional context about a caller's phone number.\",\n        \"operationId\": \"getCallerInfo\",\n        \"parameters\": [\n          {\n            \"name\": \"phoneNumber\",\n            \"in\": \"path\",\n            \"description\": \"The caller's phone number in E.164 international format (e.g., +14155552671).\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Phone number information\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"valid\": {\n                      \"type\": \"boolean\",\n                      \"description\": \"Whether the phone number is valid\"\n                    },\n                    \"country_name\": {\n                      \"type\": \"string\",\n                      \"description\": \"Country associated with the number\"\n                    },\n                    \"location\": {\n                      \"type\": \"string\",\n                      \"description\": \"Geographic location of the number\"\n                    },\n                    \"carrier\": {\n                      \"type\": \"string\",\n                      \"description\": \"Phone carrier name\"\n                    },\n                    \"line_type\": {\n                      \"type\": \"string\",\n                      \"description\": \"Type of phone line\"\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/call-record\": {\n      \"post\": {\n        \"summary\": \"Save a call record to the database\",\n        \"description\": \"Saves the caller's information and call details to the database. Call this tool after you have collected the caller's name, phone number, and reason for calling, and after confirming the call is not spam. The call_id should be a unique identifier for this call session.\",\n        \"operationId\": \"saveCallRecord\",\n        \"requestBody\": {\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"call_id\": {\n                    \"type\": \"string\",\n                    \"description\": \"Unique identifier for this call session. Use the session ID or generate a UUID.\"\n                  },\n                  \"caller_name\": {\n                    \"type\": \"string\",\n                    \"description\": \"The caller's full name as provided by them.\"\n                  },\n                  \"caller_phone\": {\n                    \"type\": \"string\",\n                    \"description\": \"The caller's phone number in E.164 format.\"\n                  },\n                  \"reason\": {\n                    \"type\": \"string\",\n                    \"description\": \"The caller's stated reason for calling or their message.\"\n                  },\n                  \"is_spam\": {\n                    \"type\": \"boolean\",\n                    \"description\": \"Whether the call was identified as spam.\"\n                  }\n                },\n                \"required\": [\n                  \"call_id\",\n                  \"caller_name\",\n                  \"caller_phone\",\n                  \"reason\",\n                  \"is_spam\"\n                ]\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Call record saved successfully\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\",\n                      \"description\": \"Whether the record was saved successfully\"\n                    },\n                    \"call_id\": {\n                      \"type\": \"string\",\n                      \"description\": \"The call ID of the saved record\"\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/notification\": {\n      \"post\": {\n        \"summary\": \"Send a notification about a call\",\n        \"description\": \"Sends an SNS notification to the phone owner with the caller's details and message. Call this tool after successfully saving the call record, only for legitimate (non-spam) calls.\",\n        \"operationId\": \"sendNotification\",\n        \"requestBody\": {\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"caller_name\": {\n                    \"type\": \"string\",\n                    \"description\": \"The caller's name.\"\n                  },\n                  \"caller_phone\": {\n                    \"type\": \"string\",\n                    \"description\": \"The caller's phone number.\"\n                  },\n                  \"reason\": {\n                    \"type\": \"string\",\n                    \"description\": \"The reason for the call or the caller's message.\"\n                  },\n                  \"call_id\": {\n                    \"type\": \"string\",\n                    \"description\": \"The unique call identifier for reference.\"\n                  }\n                },\n                \"required\": [\n                  \"caller_name\",\n                  \"caller_phone\",\n                  \"reason\",\n                  \"call_id\"\n                ]\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Notification sent successfully\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\",\n                      \"description\": \"Whether the notification was sent successfully\"\n                    },\n                    \"message_id\": {\n                      \"type\": \"string\",\n                      \"description\": \"The SNS message ID for tracking\"\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+                "s3": []
+              }
+            ],
+            "description": "Actions for managing incoming calls: spam detection, saving records, sending notifications, and phone lookups.",
+            "function_schema": [],
+            "id": "ZTMU4DCB1M,XFP79LEMQS,DRAFT",
+            "parent_action_group_signature": null,
+            "prepare_agent": true,
+            "region": "ap-southeast-2",
+            "skip_resource_in_use_check": true,
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "dependencies": [
+            "aws_bedrockagent_agent.caller_agent",
+            "aws_dynamodb_table.call_records",
+            "aws_iam_role.bedrock_agent",
+            "aws_iam_role.lambda_execution",
+            "aws_lambda_function.agent_action_handler",
+            "aws_sns_topic.call_notifications",
+            "data.archive_file.lambda_zip",
+            "null_resource.lambda_build"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_bedrockagent_agent_alias",
+      "name": "live",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "agent_alias_arn": "arn:aws:bedrock:ap-southeast-2:448049809502:agent-alias/XFP79LEMQS/SP6VGXLTGP",
+            "agent_alias_id": "SP6VGXLTGP",
+            "agent_alias_name": "live",
+            "agent_id": "XFP79LEMQS",
+            "description": "Production alias for the caller answering agent",
+            "id": "SP6VGXLTGP,XFP79LEMQS",
+            "region": "ap-southeast-2",
+            "routing_configuration": [
+              {
+                "agent_version": "1",
+                "provisioned_throughput": null
+              }
+            ],
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "dependencies": [
+            "aws_bedrockagent_agent.caller_agent",
+            "aws_bedrockagent_agent_action_group.caller_management",
+            "aws_dynamodb_table.call_records",
+            "aws_iam_role.bedrock_agent",
+            "aws_iam_role.lambda_execution",
+            "aws_lambda_function.agent_action_handler",
+            "aws_sns_topic.call_notifications",
+            "data.archive_file.lambda_zip",
+            "null_resource.lambda_build"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_connect_contact_flow",
+      "name": "caller_agent",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:connect:ap-southeast-2:448049809502:instance/7029378a-e2a7-406b-bf12-c07b947cc499/contact-flow/a6089d26-92c5-49a9-8e32-f83020fd9587",
+            "contact_flow_id": "a6089d26-92c5-49a9-8e32-f83020fd9587",
+            "content": "{\n  \"Version\": \"2019-10-30\",\n  \"StartAction\": \"action-set-voice\",\n  \"Metadata\": {\n    \"EntryPointPosition\": { \"x\": 20, \"y\": 100 },\n    \"ActionMetadata\": {\n      \"action-set-voice\": { \"Position\": { \"x\": 200, \"y\": 100 } },\n      \"action-lex-bot\": { \"Position\": { \"x\": 400, \"y\": 100 } },\n      \"action-post-lex\": { \"Position\": { \"x\": 600, \"y\": 100 } },\n      \"action-error-message\": { \"Position\": { \"x\": 600, \"y\": 300 } },\n      \"action-disconnect\": { \"Position\": { \"x\": 800, \"y\": 200 } }\n    }\n  },\n  \"Actions\": [\n    {\n      \"Identifier\": \"action-set-voice\",\n      \"Type\": \"UpdateContactTextToSpeechVoice\",\n      \"Parameters\": {\n        \"TextToSpeechVoice\": \"Joanna\",\n        \"TextToSpeechEngine\": \"Neural\"\n      },\n      \"Transitions\": {\n        \"NextAction\": \"action-lex-bot\",\n        \"Errors\": [\n          {\n            \"NextAction\": \"action-lex-bot\",\n            \"ErrorType\": \"NoMatchingError\"\n          }\n        ],\n        \"Conditions\": []\n      }\n    },\n    {\n      \"Identifier\": \"action-lex-bot\",\n      \"Type\": \"ConnectParticipantWithLexBot\",\n      \"Parameters\": {\n        \"Text\": \"Hello, thank you for calling.\",\n        \"LexV2Bot\": {\n          \"AliasArn\": \"arn:aws:lex:ap-southeast-2:448049809502:bot-alias/KHFFZES20W/MWVNJOTEE7\"\n        },\n        \"LexSessionAttributes\": {},\n        \"LexTimeoutSeconds\": {\n          \"Text\": \"300\"\n        }\n      },\n      \"Transitions\": {\n        \"NextAction\": \"action-post-lex\",\n        \"Errors\": [\n          {\n            \"NextAction\": \"action-error-message\",\n            \"ErrorType\": \"InputTimeLimitExceeded\"\n          },\n          {\n            \"NextAction\": \"action-error-message\",\n            \"ErrorType\": \"NoMatchingError\"\n          },\n          {\n            \"NextAction\": \"action-error-message\",\n            \"ErrorType\": \"NoMatchingCondition\"\n          }\n        ],\n        \"Conditions\": []\n      }\n    },\n    {\n      \"Identifier\": \"action-post-lex\",\n      \"Type\": \"MessageParticipant\",\n      \"Parameters\": {\n        \"Text\": \"Thank you for calling. Goodbye.\"\n      },\n      \"Transitions\": {\n        \"NextAction\": \"action-disconnect\",\n        \"Errors\": [\n          {\n            \"NextAction\": \"action-disconnect\",\n            \"ErrorType\": \"NoMatchingError\"\n          }\n        ],\n        \"Conditions\": []\n      }\n    },\n    {\n      \"Identifier\": \"action-error-message\",\n      \"Type\": \"MessageParticipant\",\n      \"Parameters\": {\n        \"Text\": \"We're sorry, we were unable to process your call at this time. Please try again later. Goodbye.\"\n      },\n      \"Transitions\": {\n        \"NextAction\": \"action-disconnect\",\n        \"Errors\": [\n          {\n            \"NextAction\": \"action-disconnect\",\n            \"ErrorType\": \"NoMatchingError\"\n          }\n        ],\n        \"Conditions\": []\n      }\n    },\n    {\n      \"Identifier\": \"action-disconnect\",\n      \"Type\": \"DisconnectParticipant\",\n      \"Parameters\": {},\n      \"Transitions\": {}\n    }\n  ]\n}\n",
+            "content_hash": null,
+            "description": "Automated caller answering agent flow",
+            "filename": null,
+            "id": "7029378a-e2a7-406b-bf12-c07b947cc499:a6089d26-92c5-49a9-8e32-f83020fd9587",
+            "instance_id": "7029378a-e2a7-406b-bf12-c07b947cc499",
+            "name": "Caller Agent Flow",
+            "region": "ap-southeast-2",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "type": "CONTACT_FLOW"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_bedrockagent_agent.caller_agent",
+            "aws_bedrockagent_agent_action_group.caller_management",
+            "aws_bedrockagent_agent_alias.live",
+            "aws_connect_instance.this",
+            "aws_dynamodb_table.call_records",
+            "aws_iam_role.bedrock_agent",
+            "aws_iam_role.lambda_execution",
+            "aws_iam_role.lex_bot",
+            "aws_lambda_function.agent_action_handler",
+            "aws_lexv2models_bot.caller_bot",
+            "aws_lexv2models_bot_locale.en_us",
+            "aws_lexv2models_bot_version.v1",
+            "aws_sns_topic.call_notifications",
+            "awscc_lex_bot_alias.live",
+            "data.archive_file.lambda_zip",
+            "data.aws_caller_identity.current",
+            "data.aws_region.current",
+            "null_resource.bedrock_agent_intent",
+            "null_resource.connect_lex_v2_association",
+            "null_resource.lambda_build"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_connect_hours_of_operation",
+      "name": "twenty_four_seven",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:connect:ap-southeast-2:448049809502:instance/7029378a-e2a7-406b-bf12-c07b947cc499/operating-hours/4e80351c-d884-4c95-83b7-8c0acf0f64b2",
+            "config": [
+              {
+                "day": "FRIDAY",
+                "end_time": [
+                  {
+                    "hours": 23,
+                    "minutes": 59
+                  }
+                ],
+                "start_time": [
+                  {
+                    "hours": 0,
+                    "minutes": 0
+                  }
+                ]
+              },
+              {
+                "day": "MONDAY",
+                "end_time": [
+                  {
+                    "hours": 23,
+                    "minutes": 59
+                  }
+                ],
+                "start_time": [
+                  {
+                    "hours": 0,
+                    "minutes": 0
+                  }
+                ]
+              },
+              {
+                "day": "SATURDAY",
+                "end_time": [
+                  {
+                    "hours": 23,
+                    "minutes": 59
+                  }
+                ],
+                "start_time": [
+                  {
+                    "hours": 0,
+                    "minutes": 0
+                  }
+                ]
+              },
+              {
+                "day": "SUNDAY",
+                "end_time": [
+                  {
+                    "hours": 23,
+                    "minutes": 59
+                  }
+                ],
+                "start_time": [
+                  {
+                    "hours": 0,
+                    "minutes": 0
+                  }
+                ]
+              },
+              {
+                "day": "THURSDAY",
+                "end_time": [
+                  {
+                    "hours": 23,
+                    "minutes": 59
+                  }
+                ],
+                "start_time": [
+                  {
+                    "hours": 0,
+                    "minutes": 0
+                  }
+                ]
+              },
+              {
+                "day": "TUESDAY",
+                "end_time": [
+                  {
+                    "hours": 23,
+                    "minutes": 59
+                  }
+                ],
+                "start_time": [
+                  {
+                    "hours": 0,
+                    "minutes": 0
+                  }
+                ]
+              },
+              {
+                "day": "WEDNESDAY",
+                "end_time": [
+                  {
+                    "hours": 23,
+                    "minutes": 59
+                  }
+                ],
+                "start_time": [
+                  {
+                    "hours": 0,
+                    "minutes": 0
+                  }
+                ]
+              }
+            ],
+            "description": "Available 24 hours a day, 7 days a week",
+            "hours_of_operation_id": "4e80351c-d884-4c95-83b7-8c0acf0f64b2",
+            "id": "7029378a-e2a7-406b-bf12-c07b947cc499:4e80351c-d884-4c95-83b7-8c0acf0f64b2",
+            "instance_id": "7029378a-e2a7-406b-bf12-c07b947cc499",
+            "name": "24/7 Hours",
+            "region": "ap-southeast-2",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "time_zone": "UTC"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_connect_instance.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_connect_instance",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:connect:ap-southeast-2:448049809502:instance/7029378a-e2a7-406b-bf12-c07b947cc499",
+            "auto_resolve_best_voices_enabled": true,
+            "contact_flow_logs_enabled": false,
+            "contact_lens_enabled": true,
+            "created_time": "2026-02-12T21:51:39Z",
+            "directory_id": null,
+            "early_media_enabled": true,
+            "id": "7029378a-e2a7-406b-bf12-c07b947cc499",
+            "identity_management_type": "CONNECT_MANAGED",
+            "inbound_calls_enabled": true,
+            "instance_alias": "caller-agent",
+            "multi_party_conference_enabled": false,
+            "outbound_calls_enabled": false,
+            "region": "ap-southeast-2",
+            "service_role": "arn:aws:iam::448049809502:role/aws-service-role/connect.amazonaws.com/AWSServiceRoleForAmazonConnect_eGxOgg8F0fKjKWt6U6YQ",
+            "status": "ACTIVE",
+            "tags": {},
+            "tags_all": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "id": "7029378a-e2a7-406b-bf12-c07b947cc499",
+            "region": "ap-southeast-2"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwfX0="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_connect_phone_number",
+      "name": "caller_agent",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:connect:ap-southeast-2:448049809502:phone-number/08f5ad55-d383-4f6f-be4d-6861a2692142",
+            "country_code": "AU",
+            "description": "",
+            "id": "08f5ad55-d383-4f6f-be4d-6861a2692142",
+            "phone_number": "+61283487410",
+            "prefix": null,
+            "region": "ap-southeast-2",
+            "status": [
+              {
+                "message": "",
+                "status": "CLAIMED"
+              }
+            ],
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "target_arn": "arn:aws:connect:ap-southeast-2:448049809502:instance/7029378a-e2a7-406b-bf12-c07b947cc499",
+            "timeouts": null,
+            "type": "DID"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "id": "08f5ad55-d383-4f6f-be4d-6861a2692142",
+            "region": "ap-southeast-2"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_connect_instance.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_connect_phone_number_contact_flow_association",
+      "name": "caller_agent",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "contact_flow_id": "a6089d26-92c5-49a9-8e32-f83020fd9587",
+            "instance_id": "7029378a-e2a7-406b-bf12-c07b947cc499",
+            "phone_number_id": "08f5ad55-d383-4f6f-be4d-6861a2692142",
+            "region": "ap-southeast-2"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "dependencies": [
+            "aws_bedrockagent_agent.caller_agent",
+            "aws_bedrockagent_agent_action_group.caller_management",
+            "aws_bedrockagent_agent_alias.live",
+            "aws_connect_contact_flow.caller_agent",
+            "aws_connect_instance.this",
+            "aws_connect_phone_number.caller_agent",
+            "aws_dynamodb_table.call_records",
+            "aws_iam_role.bedrock_agent",
+            "aws_iam_role.lambda_execution",
+            "aws_iam_role.lex_bot",
+            "aws_lambda_function.agent_action_handler",
+            "aws_lexv2models_bot.caller_bot",
+            "aws_lexv2models_bot_locale.en_us",
+            "aws_lexv2models_bot_version.v1",
+            "aws_sns_topic.call_notifications",
+            "awscc_lex_bot_alias.live",
+            "data.archive_file.lambda_zip",
+            "data.aws_caller_identity.current",
+            "data.aws_region.current",
+            "null_resource.bedrock_agent_intent",
+            "null_resource.connect_lex_v2_association",
+            "null_resource.lambda_build"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_connect_queue",
+      "name": "default",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:connect:ap-southeast-2:448049809502:instance/7029378a-e2a7-406b-bf12-c07b947cc499/queue/ace08d2a-a6c1-4dc9-8929-0326cb7a5801",
+            "description": "Default queue for the caller answering agent",
+            "hours_of_operation_id": "4e80351c-d884-4c95-83b7-8c0acf0f64b2",
+            "id": "7029378a-e2a7-406b-bf12-c07b947cc499:ace08d2a-a6c1-4dc9-8929-0326cb7a5801",
+            "instance_id": "7029378a-e2a7-406b-bf12-c07b947cc499",
+            "max_contacts": 0,
+            "name": "CallerAgentQueue",
+            "outbound_caller_config": [],
+            "queue_id": "ace08d2a-a6c1-4dc9-8929-0326cb7a5801",
+            "quick_connect_ids": [],
+            "region": "ap-southeast-2",
+            "status": "ENABLED",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_connect_hours_of_operation.twenty_four_seven",
+            "aws_connect_instance.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_dynamodb_table",
+      "name": "call_records",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:dynamodb:ap-southeast-2:448049809502:table/caller-agent-call-records",
+            "attribute": [
+              {
+                "name": "call_id",
+                "type": "S"
+              },
+              {
+                "name": "caller_phone",
+                "type": "S"
+              },
+              {
+                "name": "timestamp",
+                "type": "S"
+              }
+            ],
+            "billing_mode": "PAY_PER_REQUEST",
+            "deletion_protection_enabled": false,
+            "global_secondary_index": [
+              {
+                "hash_key": "caller_phone",
+                "key_schema": [
+                  {
+                    "attribute_name": "caller_phone",
+                    "key_type": "HASH"
+                  },
+                  {
+                    "attribute_name": "timestamp",
+                    "key_type": "RANGE"
+                  }
+                ],
+                "name": "phone-number-index",
+                "non_key_attributes": [],
+                "on_demand_throughput": [],
+                "projection_type": "ALL",
+                "range_key": "timestamp",
+                "read_capacity": 0,
+                "warm_throughput": [],
+                "write_capacity": 0
+              }
+            ],
+            "global_table_witness": [],
+            "hash_key": "call_id",
+            "id": "caller-agent-call-records",
+            "import_table": [],
+            "local_secondary_index": [],
+            "name": "caller-agent-call-records",
+            "on_demand_throughput": [],
+            "point_in_time_recovery": [
+              {
+                "enabled": true,
+                "recovery_period_in_days": 35
+              }
+            ],
+            "range_key": "timestamp",
+            "read_capacity": 0,
+            "region": "ap-southeast-2",
+            "replica": [],
+            "restore_date_time": null,
+            "restore_source_name": null,
+            "restore_source_table_arn": null,
+            "restore_to_latest_time": null,
+            "server_side_encryption": [],
+            "stream_arn": "",
+            "stream_enabled": false,
+            "stream_label": "",
+            "stream_view_type": "",
+            "table_class": "STANDARD",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "timeouts": null,
+            "ttl": [
+              {
+                "attribute_name": "",
+                "enabled": false
+              }
+            ],
+            "warm_throughput": [],
+            "write_capacity": 0
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "bedrock_agent",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::448049809502:role/caller-agent-bedrock-role-ap-southeast-2",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"bedrock.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-02-12T22:49:11Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "caller-agent-bedrock-role-ap-southeast-2",
+            "inline_policy": [
+              {
+                "name": "caller-agent-bedrock-policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"bedrock:InvokeModel\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:bedrock:ap-southeast-2::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0\"],\"Sid\":\"InvokeModel\"}]}"
+              }
+            ],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "caller-agent-bedrock-role-ap-southeast-2",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "unique_id": "AROAWQUOZRBPL7LNAMEG5"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "name": "caller-agent-bedrock-role-ap-southeast-2"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "lambda_execution",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::448049809502:role/caller-agent-lambda-role-ap-southeast-2",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-02-12T22:49:11Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "caller-agent-lambda-role-ap-southeast-2",
+            "inline_policy": [
+              {
+                "name": "caller-agent-lambda-policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:logs:ap-southeast-2:448049809502:*\",\"Sid\":\"CloudWatchLogs\"},{\"Action\":[\"dynamodb:PutItem\",\"dynamodb:GetItem\",\"dynamodb:UpdateItem\",\"dynamodb:Query\",\"dynamodb:Scan\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:dynamodb:ap-southeast-2:448049809502:table/caller-agent-call-records\",\"arn:aws:dynamodb:ap-southeast-2:448049809502:table/caller-agent-call-records/index/*\"],\"Sid\":\"DynamoDBAccess\"},{\"Action\":[\"sns:Publish\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications\",\"Sid\":\"SNSPublish\"}]}"
+              }
+            ],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "caller-agent-lambda-role-ap-southeast-2",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "unique_id": "AROAWQUOZRBPLZSWAZVQM"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "name": "caller-agent-lambda-role-ap-southeast-2"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "lex_bot",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::448049809502:role/caller-agent-lex-role-ap-southeast-2",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lexv2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-02-12T22:49:11Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "caller-agent-lex-role-ap-southeast-2",
+            "inline_policy": [
+              {
+                "name": "caller-agent-lex-policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"bedrock:InvokeAgent\",\"bedrock:GetAgent\",\"bedrock:GetAgentAlias\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:bedrock:ap-southeast-2:448049809502:agent/XFP79LEMQS\",\"arn:aws:bedrock:ap-southeast-2:448049809502:agent/XFP79LEMQS/*\"],\"Sid\":\"BedrockAgentAccess\"},{\"Action\":[\"polly:SynthesizeSpeech\"],\"Effect\":\"Allow\",\"Resource\":\"*\",\"Sid\":\"PollySynthesizeSpeech\"}]}"
+              }
+            ],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "caller-agent-lex-role-ap-southeast-2",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "unique_id": "AROAWQUOZRBPBHB5ZFYD3"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "name": "caller-agent-lex-role-ap-southeast-2"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "bedrock_agent_permissions",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "caller-agent-bedrock-role-ap-southeast-2:caller-agent-bedrock-policy",
+            "name": "caller-agent-bedrock-policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"bedrock:InvokeModel\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:bedrock:ap-southeast-2::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0\"],\"Sid\":\"InvokeModel\"}]}",
+            "role": "caller-agent-bedrock-role-ap-southeast-2"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "name": "caller-agent-bedrock-policy",
+            "role": "caller-agent-bedrock-role-ap-southeast-2"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.bedrock_agent",
+            "data.aws_region.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "lambda_permissions",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "caller-agent-lambda-role-ap-southeast-2:caller-agent-lambda-policy",
+            "name": "caller-agent-lambda-policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:logs:ap-southeast-2:448049809502:*\",\"Sid\":\"CloudWatchLogs\"},{\"Action\":[\"dynamodb:PutItem\",\"dynamodb:GetItem\",\"dynamodb:UpdateItem\",\"dynamodb:Query\",\"dynamodb:Scan\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:dynamodb:ap-southeast-2:448049809502:table/caller-agent-call-records\",\"arn:aws:dynamodb:ap-southeast-2:448049809502:table/caller-agent-call-records/index/*\"],\"Sid\":\"DynamoDBAccess\"},{\"Action\":[\"sns:Publish\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications\",\"Sid\":\"SNSPublish\"}]}",
+            "role": "caller-agent-lambda-role-ap-southeast-2"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "name": "caller-agent-lambda-policy",
+            "role": "caller-agent-lambda-role-ap-southeast-2"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_dynamodb_table.call_records",
+            "aws_iam_role.lambda_execution",
+            "aws_sns_topic.call_notifications",
+            "data.aws_caller_identity.current",
+            "data.aws_region.current",
+            "data.aws_secretsmanager_secret.numverify"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "lex_bot_permissions",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "caller-agent-lex-role-ap-southeast-2:caller-agent-lex-policy",
+            "name": "caller-agent-lex-policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"bedrock:InvokeAgent\",\"bedrock:GetAgent\",\"bedrock:GetAgentAlias\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:bedrock:ap-southeast-2:448049809502:agent/XFP79LEMQS\",\"arn:aws:bedrock:ap-southeast-2:448049809502:agent/XFP79LEMQS/*\"],\"Sid\":\"BedrockAgentAccess\"},{\"Action\":[\"polly:SynthesizeSpeech\"],\"Effect\":\"Allow\",\"Resource\":\"*\",\"Sid\":\"PollySynthesizeSpeech\"}]}",
+            "role": "caller-agent-lex-role-ap-southeast-2"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "name": "caller-agent-lex-policy",
+            "role": "caller-agent-lex-role-ap-southeast-2"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_bedrockagent_agent.caller_agent",
+            "aws_iam_role.bedrock_agent",
+            "aws_iam_role.lex_bot"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "agent_action_handler",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "architectures": [
+              "x86_64"
+            ],
+            "arn": "arn:aws:lambda:ap-southeast-2:448049809502:function:caller-agent-action-handler",
+            "capacity_provider_config": [],
+            "code_sha256": "4cyrm/BG92sY6uTPM+k6dDJ1zE1apMfS/alnOAolPV0=",
+            "code_signing_config_arn": "",
+            "dead_letter_config": [],
+            "description": "",
+            "durable_config": [],
+            "environment": [
+              {
+                "variables": {
+                  "CALL_RECORDS_TABLE": "caller-agent-call-records",
+                  "NOTIFICATION_TOPIC_ARN": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications",
+                  "SPAM_DETECTION_ENABLED": "false"
+                }
+              }
+            ],
+            "ephemeral_storage": [
+              {
+                "size": 512
+              }
+            ],
+            "file_system_config": [],
+            "filename": "./build/lambda_payload.zip",
+            "function_name": "caller-agent-action-handler",
+            "handler": "index.lambda_handler",
+            "id": "caller-agent-action-handler",
+            "image_config": [],
+            "image_uri": "",
+            "invoke_arn": "arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-2:448049809502:function:caller-agent-action-handler/invocations",
+            "kms_key_arn": "",
+            "last_modified": "2026-02-13T07:42:42.387+0000",
+            "layers": [],
+            "logging_config": [
+              {
+                "application_log_level": "",
+                "log_format": "Text",
+                "log_group": "/aws/lambda/caller-agent-action-handler",
+                "system_log_level": ""
+              }
+            ],
+            "memory_size": 256,
+            "package_type": "Zip",
+            "publish": false,
+            "publish_to": null,
+            "qualified_arn": "arn:aws:lambda:ap-southeast-2:448049809502:function:caller-agent-action-handler:$LATEST",
+            "qualified_invoke_arn": "arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-2:448049809502:function:caller-agent-action-handler:$LATEST/invocations",
+            "region": "ap-southeast-2",
+            "replace_security_groups_on_destroy": null,
+            "replacement_security_group_ids": null,
+            "reserved_concurrent_executions": -1,
+            "response_streaming_invoke_arn": "arn:aws:apigateway:ap-southeast-2:lambda:path/2021-11-15/functions/arn:aws:lambda:ap-southeast-2:448049809502:function:caller-agent-action-handler/response-streaming-invocations",
+            "role": "arn:aws:iam::448049809502:role/caller-agent-lambda-role-ap-southeast-2",
+            "runtime": "python3.13",
+            "s3_bucket": null,
+            "s3_key": null,
+            "s3_object_version": null,
+            "signing_job_arn": "",
+            "signing_profile_version_arn": "",
+            "skip_destroy": false,
+            "snap_start": [],
+            "source_code_hash": "4cyrm/BG92sY6uTPM+k6dDJ1zE1apMfS/alnOAolPV0=",
+            "source_code_size": 1078250,
+            "source_kms_key_arn": "",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "tenancy_config": [],
+            "timeout": 30,
+            "timeouts": null,
+            "tracing_config": [
+              {
+                "mode": "PassThrough"
+              }
+            ],
+            "version": "$LATEST",
+            "vpc_config": []
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "function_name": "caller-agent-action-handler",
+            "region": "ap-southeast-2"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_dynamodb_table.call_records",
+            "aws_iam_role.lambda_execution",
+            "aws_sns_topic.call_notifications",
+            "data.archive_file.lambda_zip",
+            "null_resource.lambda_build"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_permission",
+      "name": "allow_bedrock",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "action": "lambda:InvokeFunction",
+            "event_source_token": null,
+            "function_name": "caller-agent-action-handler",
+            "function_url_auth_type": null,
+            "id": "AllowBedrockInvocation",
+            "invoked_via_function_url": null,
+            "principal": "bedrock.amazonaws.com",
+            "principal_org_id": null,
+            "qualifier": "",
+            "region": "ap-southeast-2",
+            "source_account": null,
+            "source_arn": "arn:aws:bedrock:ap-southeast-2:448049809502:agent/XFP79LEMQS",
+            "statement_id": "AllowBedrockInvocation",
+            "statement_id_prefix": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "448049809502",
+            "function_name": "caller-agent-action-handler",
+            "qualifier": null,
+            "region": "ap-southeast-2",
+            "statement_id": "AllowBedrockInvocation"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_bedrockagent_agent.caller_agent",
+            "aws_dynamodb_table.call_records",
+            "aws_iam_role.bedrock_agent",
+            "aws_iam_role.lambda_execution",
+            "aws_lambda_function.agent_action_handler",
+            "aws_sns_topic.call_notifications",
+            "data.archive_file.lambda_zip",
+            "null_resource.lambda_build"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lexv2models_bot",
+      "name": "caller_bot",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:lex:ap-southeast-2:448049809502:bot/KHFFZES20W",
+            "data_privacy": [
+              {
+                "child_directed": false
+              }
+            ],
+            "description": "Lex bot for automated caller answering with Bedrock Agent integration",
+            "id": "KHFFZES20W",
+            "idle_session_ttl_in_seconds": 300,
+            "members": [],
+            "name": "CallerAnsweringBot",
+            "region": "ap-southeast-2",
+            "role_arn": "arn:aws:iam::448049809502:role/caller-agent-lex-role-ap-southeast-2",
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "test_bot_alias_tags": null,
+            "timeouts": null,
+            "type": "Bot"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "dependencies": [
+            "aws_iam_role.lex_bot"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lexv2models_bot_locale",
+      "name": "en_au",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "bot_id": "KHFFZES20W",
+            "bot_version": "DRAFT",
+            "description": null,
+            "id": "en_AU,KHFFZES20W,DRAFT",
+            "locale_id": "en_AU",
+            "n_lu_intent_confidence_threshold": 0.4,
+            "name": "English (AU)",
+            "region": "ap-southeast-2",
+            "timeouts": null,
+            "voice_settings": [
+              {
+                "engine": "neural",
+                "voice_id": "Olivia"
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_sns_topic",
+      "name": "call_notifications",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "application_failure_feedback_role_arn": "",
+            "application_success_feedback_role_arn": "",
+            "application_success_feedback_sample_rate": 0,
+            "archive_policy": "",
+            "arn": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications",
+            "beginning_archive_time": "",
+            "content_based_deduplication": false,
+            "delivery_policy": "",
+            "display_name": "Caller Agent Notifications",
+            "fifo_throughput_scope": "",
+            "fifo_topic": false,
+            "firehose_failure_feedback_role_arn": "",
+            "firehose_success_feedback_role_arn": "",
+            "firehose_success_feedback_sample_rate": 0,
+            "http_failure_feedback_role_arn": "",
+            "http_success_feedback_role_arn": "",
+            "http_success_feedback_sample_rate": 0,
+            "id": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications",
+            "kms_master_key_id": "",
+            "lambda_failure_feedback_role_arn": "",
+            "lambda_success_feedback_role_arn": "",
+            "lambda_success_feedback_sample_rate": 0,
+            "name": "caller-agent-notifications",
+            "name_prefix": "",
+            "owner": "448049809502",
+            "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"448049809502\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}",
+            "region": "ap-southeast-2",
+            "signature_version": 0,
+            "sqs_failure_feedback_role_arn": "",
+            "sqs_success_feedback_role_arn": "",
+            "sqs_success_feedback_sample_rate": 0,
+            "tags": {
+              "Project": "caller-agent"
+            },
+            "tags_all": {
+              "Project": "caller-agent"
+            },
+            "tracing_config": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_sns_topic_subscription",
+      "name": "email",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications:54a864b1-a1c4-494a-922f-3a3d8d7f77cd",
+            "confirmation_timeout_in_minutes": 1,
+            "confirmation_was_authenticated": false,
+            "delivery_policy": "",
+            "endpoint": "engrpoljohncruz@gmail.com",
+            "endpoint_auto_confirms": false,
+            "filter_policy": "",
+            "filter_policy_scope": "",
+            "id": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications:54a864b1-a1c4-494a-922f-3a3d8d7f77cd",
+            "owner_id": "448049809502",
+            "pending_confirmation": true,
+            "protocol": "email",
+            "raw_message_delivery": false,
+            "redrive_policy": "",
+            "region": "ap-southeast-2",
+            "replay_policy": "",
+            "subscription_role_arn": "",
+            "topic_arn": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:sns:ap-southeast-2:448049809502:caller-agent-notifications:54a864b1-a1c4-494a-922f-3a3d8d7f77cd"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_sns_topic.call_notifications"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "null_resource",
+      "name": "connect_lex_v2_association",
+      "provider": "provider[\"registry.terraform.io/hashicorp/null\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "3913115932696043337",
+            "triggers": {
+              "instance_id": "7029378a-e2a7-406b-bf12-c07b947cc499",
+              "lex_bot_alias_arn": "arn:aws:lex:ap-southeast-2:448049809502:bot-alias/KHFFZES20W/MWVNJOTEE7"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "dependencies": [
+            "aws_bedrockagent_agent.caller_agent",
+            "aws_bedrockagent_agent_action_group.caller_management",
+            "aws_bedrockagent_agent_alias.live",
+            "aws_connect_instance.this",
+            "aws_dynamodb_table.call_records",
+            "aws_iam_role.bedrock_agent",
+            "aws_iam_role.lambda_execution",
+            "aws_iam_role.lex_bot",
+            "aws_lambda_function.agent_action_handler",
+            "aws_lexv2models_bot.caller_bot",
+            "aws_lexv2models_bot_locale.en_us",
+            "aws_lexv2models_bot_version.v1",
+            "aws_sns_topic.call_notifications",
+            "awscc_lex_bot_alias.live",
+            "data.archive_file.lambda_zip",
+            "data.aws_caller_identity.current",
+            "data.aws_region.current",
+            "null_resource.bedrock_agent_intent",
+            "null_resource.lambda_build"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "null_resource",
+      "name": "lambda_build",
+      "provider": "provider[\"registry.terraform.io/hashicorp/null\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "6003574931702516690",
+            "triggers": {
+              "deps_hash": "144ef08df9d99fadf318ad5b85ceca1681591d3548879e1412fb621cd78f44bc",
+              "source_hash": "d8451dad691d7fedf985caab53b99129d16afd4d5d012523c6eb40c8faa81b3e"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

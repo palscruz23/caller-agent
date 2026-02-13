@@ -34,10 +34,25 @@ output "lex_bot_id" {
 
 output "lex_bot_alias_id" {
   description = "ID of the Lex Bot alias"
-  value       = aws_lexv2models_bot_alias.live.id
+  value       = awscc_lex_bot_alias.live.bot_alias_id
+}
+
+output "connect_instance_id" {
+  description = "ID of the Amazon Connect instance"
+  value       = aws_connect_instance.this.id
+}
+
+output "connect_instance_arn" {
+  description = "ARN of the Amazon Connect instance"
+  value       = aws_connect_instance.this.arn
 }
 
 output "contact_flow_arn" {
-  description = "ARN of the Connect contact flow (empty if Connect not configured)"
-  value       = local.create_connect ? aws_connect_contact_flow.caller_agent[0].arn : ""
+  description = "ARN of the Connect contact flow"
+  value       = aws_connect_contact_flow.caller_agent.arn
+}
+
+output "phone_number" {
+  description = "The claimed phone number for incoming calls"
+  value       = aws_connect_phone_number.caller_agent.phone_number
 }

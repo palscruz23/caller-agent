@@ -41,7 +41,8 @@ resource "aws_iam_role_policy" "lex_bot_permissions" {
         ]
         Resource = [
           aws_bedrockagent_agent.caller_agent.agent_arn,
-          "${aws_bedrockagent_agent.caller_agent.agent_arn}/*"
+          "${aws_bedrockagent_agent.caller_agent.agent_arn}/*",
+          "arn:aws:bedrock:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:agent-alias/${aws_bedrockagent_agent.caller_agent.agent_id}/*"
         ]
       },
       {
@@ -71,107 +72,58 @@ resource "aws_lexv2models_bot" "caller_bot" {
   }
 }
 
-# Bot Locale — en_US with Joanna neural voice
-resource "aws_lexv2models_bot_locale" "en_us" {
+# Bot Locale — en_AU with Olivia neural voice
+resource "aws_lexv2models_bot_locale" "en_au" {
   bot_id                           = aws_lexv2models_bot.caller_bot.id
   bot_version                      = "DRAFT"
-  locale_id                        = "en_US"
+  locale_id                        = "en_AU"
   n_lu_intent_confidence_threshold = 0.40
 
   voice_settings {
-    voice_id = "Joanna"
+    voice_id = "Olivia"
     engine   = "neural"
   }
 }
 
-# Primary Intent — delegates to Bedrock Agent (QnA intent)
-resource "aws_lexv2models_intent" "bedrock_agent_handler" {
-  bot_id      = aws_lexv2models_bot.caller_bot.id
-  bot_version = "DRAFT"
-  locale_id   = aws_lexv2models_bot_locale.en_us.locale_id
-  name        = "BedrockAgentHandler"
-  description = "Delegates conversation to Bedrock Agent for intelligent call handling"
-
-  parent_intent_signature = "AMAZON.QnAIntent"
-
-  sample_utterance {
-    utterance = "I would like to leave a message"
-  }
-  sample_utterance {
-    utterance = "I'm calling about"
-  }
-  sample_utterance {
-    utterance = "My name is"
-  }
-  sample_utterance {
-    utterance = "I need to speak with someone"
-  }
-  sample_utterance {
-    utterance = "Hello"
-  }
-  sample_utterance {
-    utterance = "Hi"
-  }
-  sample_utterance {
-    utterance = "I have a question"
-  }
-}
-
-# Required Fallback Intent
-resource "aws_lexv2models_intent" "fallback" {
-  bot_id      = aws_lexv2models_bot.caller_bot.id
-  bot_version = "DRAFT"
-  locale_id   = aws_lexv2models_bot_locale.en_us.locale_id
-  name        = "FallbackIntent"
-  description = "Default fallback intent"
-
-  parent_intent_signature = "AMAZON.FallbackIntent"
-
-  closing_setting {
-    active = true
-
-    closing_response {
-      message_group {
-        message {
-          plain_text_message {
-            value = "I'm sorry, I didn't understand. Let me connect you with someone who can help. Goodbye."
-          }
-        }
-      }
-    }
-  }
-}
+# Primary Intent (BedrockAgentHandler) is created manually via the AWS Console
+# because neither the Terraform provider nor the AWS CLI support AMAZON.BedrockAgentIntent.
 
 # Bot Version — created from DRAFT after intents are defined
 resource "aws_lexv2models_bot_version" "v1" {
   bot_id = aws_lexv2models_bot.caller_bot.id
 
   locale_specification = {
-    "en_US" = {
+    "en_AU" = {
       source_bot_version = "DRAFT"
     }
   }
 
   depends_on = [
-    aws_lexv2models_intent.bedrock_agent_handler,
-    aws_lexv2models_intent.fallback,
+    aws_lexv2models_bot_locale.en_au,
   ]
 }
 
 # Bot Alias — "live" pointing to the version
-resource "aws_lexv2models_bot_alias" "live" {
-  bot_id       = aws_lexv2models_bot.caller_bot.id
-  bot_version  = aws_lexv2models_bot_version.v1.bot_version
+# Using awscc provider because aws_lexv2models_bot_alias does not exist in hashicorp/aws
+resource "awscc_lex_bot_alias" "live" {
   bot_alias_name = "live"
+  bot_id         = aws_lexv2models_bot.caller_bot.id
+  bot_version    = aws_lexv2models_bot_version.v1.bot_version
+  description    = "Live alias for caller answering bot"
 
-  bot_alias_locale_setting {
-    locale_id = "en_US"
-    bot_alias_locale_setting {
-      enabled = true
+  bot_alias_locale_settings = [
+    {
+      locale_id = "en_AU"
+      bot_alias_locale_setting = {
+        enabled = true
+      }
     }
-  }
+  ]
 
-  tags = {
-    Project = var.project_name
-  }
+  bot_alias_tags = [
+    {
+      key   = "Project"
+      value = var.project_name
+    }
+  ]
 }

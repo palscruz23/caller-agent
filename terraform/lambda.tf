@@ -15,10 +15,11 @@ resource "null_resource" "lambda_build" {
   }
 
   provisioner "local-exec" {
-    command = <<-EOT
-      rm -rf "${local.lambda_build_dir}"
-      mkdir -p "${local.lambda_build_dir}"
-      cp "${local.lambda_source_dir}/index.py" "${local.lambda_build_dir}/"
+    interpreter = ["PowerShell", "-Command"]
+    command     = <<-EOT
+      if (Test-Path "${local.lambda_build_dir}") { Remove-Item -Recurse -Force "${local.lambda_build_dir}" }
+      New-Item -ItemType Directory -Force -Path "${local.lambda_build_dir}" | Out-Null
+      Copy-Item "${local.lambda_source_dir}/index.py" "${local.lambda_build_dir}/"
       pip install -r "${local.lambda_source_dir}/requirements.txt" -t "${local.lambda_build_dir}" --quiet
     EOT
   }
@@ -60,49 +61,53 @@ resource "aws_iam_role_policy" "lambda_permissions" {
 
   policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [
-      {
-        Sid    = "CloudWatchLogs"
-        Effect = "Allow"
-        Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-        ]
-        Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
-      },
-      {
-        Sid    = "DynamoDBAccess"
-        Effect = "Allow"
-        Action = [
-          "dynamodb:PutItem",
-          "dynamodb:GetItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:Query",
-          "dynamodb:Scan"
-        ]
-        Resource = [
-          aws_dynamodb_table.call_records.arn,
-          "${aws_dynamodb_table.call_records.arn}/index/*"
-        ]
-      },
-      {
-        Sid    = "SNSPublish"
-        Effect = "Allow"
-        Action = [
-          "sns:Publish"
-        ]
-        Resource = aws_sns_topic.call_notifications.arn
-      },
-      {
-        Sid    = "SecretsManagerRead"
-        Effect = "Allow"
-        Action = [
-          "secretsmanager:GetSecretValue"
-        ]
-        Resource = data.aws_secretsmanager_secret.numverify.arn
-      }
-    ]
+    Statement = concat(
+      [
+        {
+          Sid    = "CloudWatchLogs"
+          Effect = "Allow"
+          Action = [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ]
+          Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
+        },
+        {
+          Sid    = "DynamoDBAccess"
+          Effect = "Allow"
+          Action = [
+            "dynamodb:PutItem",
+            "dynamodb:GetItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:Query",
+            "dynamodb:Scan"
+          ]
+          Resource = [
+            aws_dynamodb_table.call_records.arn,
+            "${aws_dynamodb_table.call_records.arn}/index/*"
+          ]
+        },
+        {
+          Sid    = "SNSPublish"
+          Effect = "Allow"
+          Action = [
+            "sns:Publish"
+          ]
+          Resource = aws_sns_topic.call_notifications.arn
+        },
+      ],
+      var.enable_spam_detection ? [
+        {
+          Sid    = "SecretsManagerRead"
+          Effect = "Allow"
+          Action = [
+            "secretsmanager:GetSecretValue"
+          ]
+          Resource = data.aws_secretsmanager_secret.numverify[0].arn
+        }
+      ] : []
+    )
   })
 }
 
@@ -118,11 +123,16 @@ resource "aws_lambda_function" "agent_action_handler" {
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 
   environment {
-    variables = {
-      CALL_RECORDS_TABLE   = aws_dynamodb_table.call_records.name
-      NOTIFICATION_TOPIC_ARN = aws_sns_topic.call_notifications.arn
-      NUMVERIFY_SECRET_NAME  = var.numverify_secret_name
-    }
+    variables = merge(
+      {
+        CALL_RECORDS_TABLE     = aws_dynamodb_table.call_records.name
+        NOTIFICATION_TOPIC_ARN = aws_sns_topic.call_notifications.arn
+        SPAM_DETECTION_ENABLED = tostring(var.enable_spam_detection)
+      },
+      var.enable_spam_detection ? {
+        NUMVERIFY_SECRET_NAME = var.numverify_secret_name
+      } : {}
+    )
   }
 
   tags = {

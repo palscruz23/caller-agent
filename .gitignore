@@ -13,3 +13,5 @@ terraform/build/
 
 # CDK
 cdk.out/
+
+creds/

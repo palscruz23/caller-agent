@@ -16,7 +16,7 @@
       "Identifier": "action-set-voice",
       "Type": "UpdateContactTextToSpeechVoice",
       "Parameters": {
-        "TextToSpeechVoice": "Olivia",
+        "TextToSpeechVoice": "Joanna",
         "TextToSpeechEngine": "Neural"
       },
       "Transitions": {
@@ -36,7 +36,7 @@
       "Parameters": {
         "Text": "Hello, thank you for calling.",
         "LexV2Bot": {
-          "AliasArn": "${LEX_BOT_ALIAS_ARN}"
+          "AliasArn": "arn:aws:lex:ap-southeast-2:448049809502:bot-alias/KHFFZES20W/H5VRMDM6HQ"
         },
         "LexSessionAttributes": {},
         "LexTimeoutSeconds": {
@@ -104,3 +104,4 @@
     }
   ]
 }
+
