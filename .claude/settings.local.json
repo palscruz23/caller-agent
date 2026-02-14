@@ -60,7 +60,8 @@
       "Bash(pip install:*)",
       "Bash(where python:*)",
       "Bash(\"C:\\\\Users\\\\61422\\\\anaconda3\\\\python.exe\":*)",
-      "Bash(\"C:\\\\Users\\\\61422\\\\anaconda3\\\\python.exe\" -c:*)"
+      "Bash(\"C:\\\\Users\\\\61422\\\\anaconda3\\\\python.exe\" -c:*)",
+      "Bash(aws lexv2-models update-intent:*)"
     ]
   }
 }

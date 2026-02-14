@@ -64,7 +64,7 @@
       "Identifier": "action-lex-bot",
       "Type": "ConnectParticipantWithLexBot",
       "Parameters": {
-        "Text": "Hello, thank you for calling. This is Pol's assistant. Sorry, he is currently not available. How can i help you today?",
+        "Text": "Hello, thank you for calling. This is Pol's assistant. He is currently unavailable. May I ask who's calling and the nature of your inquiry so I can prioritize this for him?",
         "LexV2Bot": {
           "AliasArn": "${LEX_BOT_ALIAS_ARN}"
         },
