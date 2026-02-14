@@ -1,17 +1,47 @@
 {
   "Version": "2019-10-30",
-  "StartAction": "action-set-voice",
+  "StartAction": "action-enable-logging",
   "Metadata": {
     "EntryPointPosition": { "x": 20, "y": 100 },
     "ActionMetadata": {
-      "action-set-voice": { "Position": { "x": 200, "y": 100 } },
-      "action-lex-bot": { "Position": { "x": 400, "y": 100 } },
-      "action-post-lex": { "Position": { "x": 600, "y": 100 } },
-      "action-error-message": { "Position": { "x": 600, "y": 300 } },
-      "action-disconnect": { "Position": { "x": 800, "y": 200 } }
+      "action-enable-logging": { "Position": { "x": 50, "y": 100 } },
+      "action-set-language": { "Position": { "x": 200, "y": 100 } },
+      "action-set-voice": { "Position": { "x": 350, "y": 100 } },
+      "action-lex-bot": { "Position": { "x": 500, "y": 100 } },
+      "action-post-lex": { "Position": { "x": 700, "y": 100 } },
+      "action-error-message": { "Position": { "x": 700, "y": 300 } },
+      "action-disconnect": { "Position": { "x": 900, "y": 200 } }
     }
   },
   "Actions": [
+    {
+      "Identifier": "action-enable-logging",
+      "Type": "UpdateFlowLoggingBehavior",
+      "Parameters": {
+        "FlowLoggingBehavior": "Enabled"
+      },
+      "Transitions": {
+        "NextAction": "action-set-language"
+      }
+    },
+    {
+      "Identifier": "action-set-language",
+      "Type": "UpdateContactData",
+      "Parameters": {
+        "LanguageCode": "en-AU",
+        "TargetContact": "Current"
+      },
+      "Transitions": {
+        "NextAction": "action-set-voice",
+        "Errors": [
+          {
+            "NextAction": "action-set-voice",
+            "ErrorType": "NoMatchingError"
+          }
+        ],
+        "Conditions": []
+      }
+    },
     {
       "Identifier": "action-set-voice",
       "Type": "UpdateContactTextToSpeechVoice",
@@ -34,20 +64,20 @@
       "Identifier": "action-lex-bot",
       "Type": "ConnectParticipantWithLexBot",
       "Parameters": {
-        "Text": "Hello, thank you for calling.",
+        "Text": "Hello, thank you for calling. This is Pol's assistant. Sorry, he is currently not available. How can i help you today?",
         "LexV2Bot": {
           "AliasArn": "${LEX_BOT_ALIAS_ARN}"
         },
         "LexSessionAttributes": {},
         "LexTimeoutSeconds": {
-          "Text": "300"
+          "Text": "60"
         }
       },
       "Transitions": {
         "NextAction": "action-post-lex",
         "Errors": [
           {
-            "NextAction": "action-error-message",
+            "NextAction": "action-post-lex",
             "ErrorType": "InputTimeLimitExceeded"
           },
           {
@@ -66,7 +96,7 @@
       "Identifier": "action-post-lex",
       "Type": "MessageParticipant",
       "Parameters": {
-        "Text": "Thank you for calling. Goodbye."
+        "Text": "Goodbye."
       },
       "Transitions": {
         "NextAction": "action-disconnect",
@@ -83,7 +113,7 @@
       "Identifier": "action-error-message",
       "Type": "MessageParticipant",
       "Parameters": {
-        "Text": "We're sorry, we were unable to process your call at this time. Please try again later. Goodbye."
+        "Text": "Sorry, we could not process your call. Goodbye."
       },
       "Transitions": {
         "NextAction": "action-disconnect",

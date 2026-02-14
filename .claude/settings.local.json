@@ -55,7 +55,12 @@
       "Bash(Start-Sleep -Seconds 10)",
       "Bash(aws bedrock-runtime invoke-model:*)",
       "Bash(aws bedrock-runtime converse:*)",
-      "Bash(aws lexv2-runtime recognize-utterance:*)"
+      "Bash(aws lexv2-runtime recognize-utterance:*)",
+      "Bash(pip install boto3 --quiet)",
+      "Bash(pip install:*)",
+      "Bash(where python:*)",
+      "Bash(\"C:\\\\Users\\\\61422\\\\anaconda3\\\\python.exe\":*)",
+      "Bash(\"C:\\\\Users\\\\61422\\\\anaconda3\\\\python.exe\" -c:*)"
     ]
   }
 }
